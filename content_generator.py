@@ -1,15 +1,16 @@
-import openai
+import google.generativeai as genai
 import random
 from typing import List, Dict, Any
 from datetime import datetime
 from config import Config
 
 class ContentGenerator:
-    """Generate engaging frontend technology content for LinkedIn posts"""
+    """Generate engaging frontend technology content for LinkedIn posts using Gemini"""
     
     def __init__(self):
-        openai.api_key = Config.OPENAI_API_KEY
-        self.client = openai.OpenAI(api_key=Config.OPENAI_API_KEY)
+        # Configure Gemini
+        genai.configure(api_key=Config.GEMINI_API_KEY)
+        self.model = genai.GenerativeModel('gemini-2.5-flash')
         
         # Frontend technology topics and trends
         self.frontend_topics = [
@@ -33,7 +34,7 @@ class ContentGenerator:
         ]
     
     def generate_post(self, topic: str = None) -> str:
-        """Generate a LinkedIn post about frontend technology"""
+        """Generate a LinkedIn post about frontend technology using Gemini"""
         if not topic:
             topic = random.choice(self.frontend_topics)
         
@@ -53,11 +54,11 @@ class ContentGenerator:
             elif template == "troubleshooting_template":
                 return self._generate_troubleshooting_post(topic)
         except Exception as e:
-            print(f"Error generating post: {e}")
+            print(f"Error generating post with Gemini: {e}")
             return self._generate_fallback_post(topic)
     
     def _generate_tip_post(self, topic: str) -> str:
-        """Generate a quick tip post"""
+        """Generate a quick tip post using Gemini"""
         prompt = f"""
         Create a LinkedIn post about a useful tip for {topic} developers.
         The post should be:
@@ -68,17 +69,15 @@ class ContentGenerator:
         - Start with "💡 Frontend Tip:" or similar
         """
         
-        response = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=200,
-            temperature=0.7
-        )
-        
-        return response.choices[0].message.content.strip()
+        try:
+            response = self.model.generate_content(prompt)
+            return response.text.strip()
+        except Exception as e:
+            print(f"Gemini API error: {e}")
+            return self._generate_fallback_post(topic)
     
     def _generate_tutorial_post(self, topic: str) -> str:
-        """Generate a mini-tutorial post"""
+        """Generate a mini-tutorial post using Gemini"""
         prompt = f"""
         Create a LinkedIn post that shares a quick tutorial or how-to about {topic}.
         The post should be:
@@ -89,17 +88,15 @@ class ContentGenerator:
         - Start with "🚀 Quick Tutorial:" or similar
         """
         
-        response = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=250,
-            temperature=0.7
-        )
-        
-        return response.choices[0].message.content.strip()
+        try:
+            response = self.model.generate_content(prompt)
+            return response.text.strip()
+        except Exception as e:
+            print(f"Gemini API error: {e}")
+            return self._generate_fallback_post(topic)
     
     def _generate_trend_post(self, topic: str) -> str:
-        """Generate a trend analysis post"""
+        """Generate a trend analysis post using Gemini"""
         prompt = f"""
         Create a LinkedIn post analyzing current trends or future outlook for {topic}.
         The post should be:
@@ -110,17 +107,15 @@ class ContentGenerator:
         - Start with "📈 Trend Watch:" or similar
         """
         
-        response = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=250,
-            temperature=0.7
-        )
-        
-        return response.choices[0].message.content.strip()
+        try:
+            response = self.model.generate_content(prompt)
+            return response.text.strip()
+        except Exception as e:
+            print(f"Gemini API error: {e}")
+            return self._generate_fallback_post(topic)
     
     def _generate_comparison_post(self, topic: str) -> str:
-        """Generate a comparison post"""
+        """Generate a comparison post using Gemini"""
         related_topics = [t for t in self.frontend_topics if t != topic]
         compare_topic = random.choice(related_topics)
         
@@ -134,17 +129,15 @@ class ContentGenerator:
         - Start with "⚖️ Comparison:" or similar
         """
         
-        response = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=250,
-            temperature=0.7
-        )
-        
-        return response.choices[0].message.content.strip()
+        try:
+            response = self.model.generate_content(prompt)
+            return response.text.strip()
+        except Exception as e:
+            print(f"Gemini API error: {e}")
+            return self._generate_fallback_post(topic)
     
     def _generate_best_practice_post(self, topic: str) -> str:
-        """Generate a best practices post"""
+        """Generate a best practices post using Gemini"""
         prompt = f"""
         Create a LinkedIn post sharing best practices for {topic}.
         The post should be:
@@ -155,17 +148,15 @@ class ContentGenerator:
         - Start with "✨ Best Practice:" or similar
         """
         
-        response = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=250,
-            temperature=0.7
-        )
-        
-        return response.choices[0].message.content.strip()
+        try:
+            response = self.model.generate_content(prompt)
+            return response.text.strip()
+        except Exception as e:
+            print(f"Gemini API error: {e}")
+            return self._generate_fallback_post(topic)
     
     def _generate_troubleshooting_post(self, topic: str) -> str:
-        """Generate a troubleshooting post"""
+        """Generate a troubleshooting post using Gemini"""
         prompt = f"""
         Create a LinkedIn post about a common issue developers face with {topic} and how to solve it.
         The post should be:
@@ -176,17 +167,15 @@ class ContentGenerator:
         - Start with "🔧 Troubleshooting:" or similar
         """
         
-        response = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=250,
-            temperature=0.7
-        )
-        
-        return response.choices[0].message.content.strip()
+        try:
+            response = self.model.generate_content(prompt)
+            return response.text.strip()
+        except Exception as e:
+            print(f"Gemini API error: {e}")
+            return self._generate_fallback_post(topic)
     
     def _generate_fallback_post(self, topic: str) -> str:
-        """Generate a simple fallback post if AI generation fails"""
+        """Generate a simple fallback post if Gemini generation fails"""
         tips = [
             f"💡 {topic} tip: Always keep your dependencies updated for better security and performance!",
             f"🚀 Working with {topic}? Remember to optimize your bundle size for faster load times.",

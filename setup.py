@@ -31,7 +31,7 @@ def setup_environment():
 def check_dependencies():
     """Check if all required dependencies are installed"""
     required_packages = [
-        'requests', 'python-dotenv', 'schedule', 'openai', 'pytz'
+        'requests', 'python-dotenv', 'schedule', 'google-generativeai', 'pytz'
     ]
     
     missing_packages = []

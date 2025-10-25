@@ -13,8 +13,8 @@ class Config:
     LINKEDIN_REDIRECT_URI = os.getenv('LINKEDIN_REDIRECT_URI', 'http://localhost:8080/callback')
     LINKEDIN_ACCESS_TOKEN = os.getenv('LINKEDIN_ACCESS_TOKEN')
     
-    # OpenAI Configuration
-    OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+    # AI Model Configuration
+    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
     
     # Bot Configuration
     POST_TIME = os.getenv('POST_TIME', '09:00')
@@ -32,7 +32,7 @@ class Config:
             'LINKEDIN_CLIENT_ID',
             'LINKEDIN_CLIENT_SECRET', 
             'LINKEDIN_ACCESS_TOKEN',
-            'OPENAI_API_KEY'
+            'GEMINI_API_KEY'
         ]
         
         missing_vars = []

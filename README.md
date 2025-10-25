@@ -1,11 +1,11 @@
 # LinkedIn Frontend Tech Bot 🤖
 
-An automated Python bot that posts daily content about frontend technologies on LinkedIn. The bot generates engaging posts about React, Vue, Angular, TypeScript, CSS, and other frontend technologies using AI.
+An automated Python bot that posts daily content about frontend technologies on LinkedIn. The bot generates engaging posts about React, Vue, Angular, TypeScript, CSS, and other frontend technologies using Google's Gemini AI.
 
 ## Features ✨
 
 - **Daily Automated Posting**: Posts content every day at a scheduled time
-- **AI-Generated Content**: Uses OpenAI GPT to create engaging frontend tech posts
+- **AI-Generated Content**: Uses Google Gemini to create engaging frontend tech posts
 - **Multiple Post Types**: Tips, tutorials, trend analysis, comparisons, best practices, and troubleshooting
 - **LinkedIn API Integration**: Seamless posting to your LinkedIn profile
 - **Flexible Scheduling**: Customizable posting time and timezone
@@ -25,7 +25,7 @@ An automated Python bot that posts daily content about frontend technologies on 
 
 - Python 3.7 or higher
 - LinkedIn Developer Account
-- OpenAI API Key
+- Gemini API Key
 - LinkedIn App with appropriate permissions
 
 ## Installation 🛠️
@@ -57,11 +57,11 @@ An automated Python bot that posts daily content about frontend technologies on 
 4. Set redirect URI to: `http://localhost:8080/callback`
 5. Note down your Client ID and Client Secret
 
-### 2. OpenAI API Setup
+### 2. Gemini API Setup
 
-1. Go to [OpenAI Platform](https://platform.openai.com/api-keys)
+1. Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
 2. Create a new API key
-3. Add it to your `.env` file
+3. Add it to your `.env` file as `GEMINI_API_KEY`
 
 ### 3. Environment Variables
 
@@ -74,8 +74,8 @@ LINKEDIN_CLIENT_SECRET=your_linkedin_client_secret
 LINKEDIN_REDIRECT_URI=http://localhost:8080/callback
 LINKEDIN_ACCESS_TOKEN=your_access_token
 
-# OpenAI API Key
-OPENAI_API_KEY=your_openai_api_key
+# Gemini API Key (AI model for content generation)
+GEMINI_API_KEY=your_gemini_api_key
 
 # Bot Configuration
 POST_TIME=09:00
@@ -184,10 +184,10 @@ Log levels:
    - Check if your LinkedIn app has the correct permissions
    - Ensure your redirect URI matches exactly
 
-2. **OpenAI API Errors**
-   - Verify your OpenAI API key is correct
-   - Check your OpenAI account has sufficient credits
-   - Ensure you have access to GPT-3.5-turbo
+2. **Gemini API Errors**
+   - Verify your Gemini API key is correct
+   - Check your Google AI Studio account
+   - Ensure you have API access enabled
 
 3. **Posts Not Appearing**
    - Check LinkedIn's API rate limits
