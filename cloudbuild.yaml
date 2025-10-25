@@ -7,8 +7,8 @@ steps:
         gcloud compute ssh himanshu@instance-20251025-043319 \
           --project=citric-celerity-416705 \
           --zone=us-central1-c \
-          --command="APP_DIR='/home/himanshu/linkedin-bot'; \
-            mkdir -p \$APP_DIR && cd \$APP_DIR && \
+          --command="mkdir -p /home/himanshu/linkedin-bot && \
+            cd /home/himanshu/linkedin-bot && \
             git pull origin main && \
             source venv/bin/activate && \
             pip install -r requirements.txt && \
