@@ -8,9 +8,19 @@ steps:
         --project=citric-celerity-416705 \
         --zone=us-central1-c \
         --command="cd /home/himanshu/linkedin-bot && \
+          git pull origin main && \
           source venv/bin/activate && \
+          pip install -q -r requirements.txt && \
           pkill -f 'python3 cli.py start' || true && \
-          nohup python3 cli.py start > server.log 2>&1 &"
+          sleep 2 && \
+          nohup python3 cli.py start > server.log 2>&1 < /dev/null & \
+          echo \$! > bot.pid && \
+          sleep 3 && \
+          if ps -p \$(cat bot.pid) > /dev/null; then \
+            echo '✅ Server deployed and running (PID: '\$(cat bot.pid)')'; \
+          else \
+            echo '❌ Server failed to start'; exit 1; \
+          fi"
 
 options:
   logging: CLOUD_LOGGING_ONLY

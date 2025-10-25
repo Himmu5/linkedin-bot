@@ -44,6 +44,9 @@ venv.bak/
 *.log
 logs/
 
+# Process ID files
+*.pid
+
 # OS
 .DS_Store
 .DS_Store?
