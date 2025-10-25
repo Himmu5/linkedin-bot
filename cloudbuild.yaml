@@ -7,12 +7,10 @@ steps:
         gcloud compute ssh himanshu@instance-20251025-043319 \
           --project=citric-celerity-416705 \
           --zone=us-central1-c \
-          --command="mkdir -p /home/himanshu/linkedin-bot && \
-            cd /home/himanshu/linkedin-bot && \
+          --command="cd /home/himanshu/linkedin-bot && \
             git pull origin main && \
             source venv/bin/activate && \
             pip install -r requirements.txt && \
-            sudo systemctl restart myapp.service || sudo systemctl start myapp.service"
+            nohup python3 cli.py start > server.log 2>&1 &"
 options:
   logging: CLOUD_LOGGING_ONLY
-
