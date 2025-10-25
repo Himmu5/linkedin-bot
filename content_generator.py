@@ -14,9 +14,9 @@ class ContentGenerator:
         
         # Frontend technology topics and trends
         self.frontend_topics = [
-            "React.js", "Vue.js", "Angular", "Next.js", "Nuxt.js", "Svelte", "Solid.js",
+            "React.js", "Vue.js", "Angular", "Next.js",
             "TypeScript", "JavaScript ES6+", "CSS Grid", "Flexbox", "Tailwind CSS",
-            "Web Components", "Progressive Web Apps", "WebAssembly", "WebRTC",
+            "Web Components", "WebAssembly", "WebRTC",
             "GraphQL", "REST APIs", "Micro-frontends", "Server-Side Rendering",
             "Static Site Generation", "JAMstack", "Webpack", "Vite", "Parcel",
             "Testing", "Jest", "Cypress", "Playwright", "Accessibility", "Performance",

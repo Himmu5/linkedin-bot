@@ -1,0 +1,14 @@
+steps:
+  # Step 1: SSH into the VM and pull latest code
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        gcloud compute ssh instance-20251025-043319 --project=citric-celerity-416705 --zone=us-central1-c
+        cd /opt/myapp &&
+        git pull origin main &&
+        source venv/bin/activate &&
+        pip install -r requirements.txt &&
+        sudo systemctl restart myapp.service
+        "
