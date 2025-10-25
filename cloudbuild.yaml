@@ -4,11 +4,11 @@ steps:
     args:
       - '-c'
       - |
-        APP_DIR="/home/himanshu/linkedin-bot"
         gcloud compute ssh himanshu@instance-20251025-043319 \
           --project=citric-celerity-416705 \
           --zone=us-central1-c \
-          --command="mkdir -p $APP_DIR && cd $APP_DIR && \
+          --command="APP_DIR='/home/himanshu/linkedin-bot'; \
+            mkdir -p \$APP_DIR && cd \$APP_DIR && \
             git pull origin main && \
             source venv/bin/activate && \
             pip install -r requirements.txt && \
