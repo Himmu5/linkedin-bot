@@ -1,11 +1,10 @@
 steps:
-  # Step 1: SSH into the VM and pull latest code
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: bash
     args:
       - '-c'
       - |
-        gcloud compute ssh instance-20251025-043319 \
+        gcloud compute ssh himanshu@instance-20251025-043319 \
           --project=citric-celerity-416705 \
           --zone=us-central1-c \
           --command="cd /opt/myapp && \
@@ -13,6 +12,5 @@ steps:
             source venv/bin/activate && \
             pip install -r requirements.txt && \
             sudo systemctl restart myapp.service"
-
 options:
   logging: CLOUD_LOGGING_ONLY
