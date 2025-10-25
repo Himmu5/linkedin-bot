@@ -11,6 +11,7 @@ steps:
             git pull origin main && \
             source venv/bin/activate && \
             pip install -r requirements.txt && \
+            pkill -f 'python3 cli.py start' || true && \
             nohup python3 cli.py start > server.log 2>&1 &"
 options:
   logging: CLOUD_LOGGING_ONLY
