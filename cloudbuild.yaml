@@ -26,14 +26,18 @@ steps:
           --project=citric-celerity-416705 \
           --zone=us-central1-c \
           --command="sudo bash -c '
+            echo \"=== Stopping linkedin-bot service ===\" && \
+            systemctl stop linkedin-bot && \
             echo \"=== Pulling latest code ===\" && \
             cd /home/himanshu/linkedin-bot && \
             git config --global --add safe.directory /home/himanshu/linkedin-bot && \
             git fetch origin && \
             git reset --hard origin/main && \
-            echo \"=== Restarting linkedin-bot service ===\" && \
+            echo \"=== Installing/Updating Python dependencies ===\" && \
+            sudo -u himanshu python3 -m pip install --user -r requirements.txt --upgrade && \
+            echo \"=== Reloading systemd and starting linkedin-bot service ===\" && \
             systemctl daemon-reload && \
-            systemctl restart linkedin-bot && \
+            systemctl start linkedin-bot && \
             sleep 5 && \
             echo \"=== Checking service status ===\" && \
             systemctl status linkedin-bot --no-pager && \
