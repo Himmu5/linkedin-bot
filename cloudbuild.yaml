@@ -23,9 +23,10 @@ steps:
         echo "=== Connecting to GCE instance and deploying ==="
 
         gcloud compute ssh instance-20251025-043319 \
-          --project=citric-celerity-416705 \
-          --zone=us-central1-c \
-          --command="sudo bash -c '
+            --project=citric-celerity-416705 \
+            --zone=us-central1-c \
+            --tunnel-through-iap \
+            --command="sudo bash -c '
             echo \"=== Stopping linkedin-bot service ===\" && \
             systemctl stop linkedin-bot && \
             echo \"=== Pulling latest code ===\" && \
@@ -34,7 +35,8 @@ steps:
             git fetch origin && \
             git reset --hard origin/main && \
             echo \"=== Installing/Updating Python dependencies ===\" && \
-            sudo -u himanshu python3 -m pip install --user -r requirements.txt --upgrade && \
+            python3 -m pip install -r requirements.txt --upgrade || \
+            (echo \"Pip install failed, trying with pip3...\" && pip3 install -r requirements.txt --upgrade) && \
             echo \"=== Reloading systemd and starting linkedin-bot service ===\" && \
             systemctl daemon-reload && \
             systemctl start linkedin-bot && \
