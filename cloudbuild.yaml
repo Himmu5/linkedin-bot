@@ -22,11 +22,11 @@ steps:
       - |
         echo "=== Connecting to GCE instance and deploying ==="
 
-        gcloud compute ssh instance-20251025-043319 \
-            --project=citric-celerity-416705 \
-            --zone=us-central1-c \
-            --tunnel-through-iap \
-            --command="sudo bash -c '
+        gcloud compute ssh himanshu@instance-20251025-043319 \
+          --project=citric-celerity-416705 \
+          --zone=us-central1-c \
+          --strict-host-key-checking=no \
+          --command="sudo bash -c '
             echo \"=== Stopping linkedin-bot service ===\" && \
             systemctl stop linkedin-bot && \
             echo \"=== Pulling latest code ===\" && \
