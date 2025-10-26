@@ -77,9 +77,9 @@ LINKEDIN_ACCESS_TOKEN=your_access_token
 # Gemini API Key (AI model for content generation)
 GEMINI_API_KEY=your_gemini_api_key
 
-# Bot Configuration
-POST_TIME=09:00
-TIMEZONE=UTC
+# Bot Configuration - Posts daily at 1:00 AM India Time (IST)
+POST_TIME=01:00
+TIMEZONE=Asia/Kolkata
 ```
 
 ### 4. Get LinkedIn Access Token
@@ -159,10 +159,10 @@ The bot generates different types of posts:
 
 ## Scheduling ⏰
 
-- **Default Time**: 9:00 AM UTC daily
+- **Default Time**: 1:00 AM IST (India Standard Time) daily
 - **Customizable**: Change `POST_TIME` in `.env` file
-- **Timezone Support**: Set `TIMEZONE` in `.env` file
-- **Format**: 24-hour format (e.g., "14:30" for 2:30 PM)
+- **Timezone Support**: Set `TIMEZONE` in `.env` file (e.g., "Asia/Kolkata" for India, "America/New_York" for EST)
+- **Format**: 24-hour format (e.g., "01:00" for 1 AM, "14:30" for 2:30 PM)
 
 ## Logging 📊
 

@@ -50,8 +50,8 @@ class Config:
     GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
     
     # Bot Configuration
-    POST_TIME = os.getenv('POST_TIME', '09:00')
-    TIMEZONE = os.getenv('TIMEZONE', 'UTC')
+    POST_TIME = os.getenv('POST_TIME', '01:00')
+    TIMEZONE = os.getenv('TIMEZONE', 'Asia/Kolkata')
     
     # LinkedIn API URLs
     LINKEDIN_API_BASE = 'https://api.linkedin.com/v2'
