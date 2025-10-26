@@ -1,35 +1,44 @@
+# cloudbuild.yaml
+# Automatically deploys your Python app to GCE when you push code.
+
 steps:
+  # STEP 1: Print build info
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: bash
     args:
       - '-c'
       - |
-        gcloud compute ssh himanshu@instance-20251025-043319 \
-        --project=citric-celerity-416705 \
-        --zone=us-central1-c \
-        --command="sudo -u himanshu bash -c '
-        cd /home/himanshu/linkedin-bot && \
-        git config --global --add safe.directory /home/himanshu/linkedin-bot && \
-        git fetch origin && \
-        git reset --hard origin/main && \
-        export GCP_PROJECT=citric-celerity-416705 && \
-        export USE_SECRET_MANAGER=true && \
-        export SECRET_ID=linkedin-bot && \
-        source venv/bin/activate && \
-        echo \"=== Installing dependencies ===\" && \
-        pip install -r requirements.txt && \
-        echo \"=== Stopping old server ===\" && \
-        pkill -f \"python3 cli.py start\" || true && \
-        sleep 2 && \
-        echo \"=== Starting new server ===\" && \
-        nohup python3 cli.py start > server.log 2>&1 & \
-        sleep 5 && \
-        echo \"=== Server startup logs ===\" && \
-        tail -n 50 server.log && \
-        echo \"=== Checking if server is running ===\" && \
-        ps aux | grep \"python3 cli.py start\" | grep -v grep && \
-        echo \"=== Server deployed successfully ===\"
-        '"
+        echo "=== Starting Cloud Build Deployment ==="
+        echo "Git Commit: $COMMIT_SHA"
+        echo "Branch: $BRANCH_NAME"
+        echo "Project: citric-celerity-416705"
+        echo "======================================="
+
+  # STEP 2: SSH into VM and pull latest code + restart service
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        echo "=== Connecting to GCE instance and deploying ==="
+
+        gcloud compute ssh instance-20251025-043319 \
+          --project=citric-celerity-416705 \
+          --zone=us-central1-c \
+          --command="sudo bash -c '
+            echo \"=== Pulling latest code ===\" && \
+            cd /home/himanshu/linkedin-bot && \
+            git config --global --add safe.directory /home/himanshu/linkedin-bot && \
+            git fetch origin && \
+            git reset --hard origin/main && \
+            echo \"=== Restarting linkedin-bot service ===\" && \
+            systemctl daemon-reload && \
+            systemctl restart linkedin-bot && \
+            sleep 5 && \
+            echo \"=== Checking service status ===\" && \
+            systemctl status linkedin-bot --no-pager && \
+            echo \"=== Deployment complete ===\"
+          '"
 
 options:
-  logging: CLOUD_LOGGING_ONLY
+  logging: CLO
