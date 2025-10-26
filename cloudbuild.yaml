@@ -8,10 +8,13 @@ steps:
         --project=citric-celerity-416705 \
         --zone=us-central1-c \
         --command="cd /home/himanshu/linkedin-bot && \
+        git fetch origin && \
+        git reset --hard origin/main && \
         export GCP_PROJECT=citric-celerity-416705 && \
         export USE_SECRET_MANAGER=true && \
         export SECRET_ID=linkedin-bot && \
         source venv/bin/activate && \
+        pip install -r requirements.txt && \
         pkill -f 'python3 cli.py start' || true && \
         nohup python3 cli.py start > server.log 2>&1 &"
 
