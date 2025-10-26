@@ -243,11 +243,45 @@ schedule.every().monday.at(Config.POST_TIME).do(self.scheduled_post)  # Weekly
 schedule.every(6).hours.do(self.scheduled_post)  # Every 6 hours
 ```
 
+## Cloud Deployment ☁️
+
+### Google Cloud Secret Manager Integration
+
+For production deployments, the bot supports Google Cloud Secret Manager for secure credential management.
+
+**Quick Setup:**
+
+1. Store your secrets in GCP Secret Manager:
+   ```bash
+   gcloud secrets create linkedin-bot \
+     --data-file=env \
+     --project=YOUR_PROJECT_ID
+   ```
+
+2. Set environment variables:
+   ```bash
+   export GCP_PROJECT=YOUR_PROJECT_ID
+   export USE_SECRET_MANAGER=true
+   ```
+
+3. Run your bot - it will automatically fetch secrets from Secret Manager!
+
+**For detailed instructions:**
+- 📘 [SECRET_MANAGER_GUIDE.md](SECRET_MANAGER_GUIDE.md) - Complete guide with setup, usage, and troubleshooting
+- 📋 [SETUP_CHECKLIST.md](SETUP_CHECKLIST.md) - Step-by-step verification checklist
+
+**Benefits:**
+- ✅ Automatic environment detection (Cloud Run, Cloud Functions, etc.)
+- ✅ Secure secret storage with access controls
+- ✅ Easy secret rotation and versioning
+- ✅ Falls back to `.env` for local development
+
 ## Security 🔒
 
 - Never commit your `.env` file to version control
 - Keep your API keys secure and rotate them regularly
 - Use environment variables in production
+- **Use Google Cloud Secret Manager for cloud deployments**
 - Monitor your LinkedIn app usage and API limits
 
 ## Contributing 🤝

@@ -1,10 +1,43 @@
 import os
+import logging
 from dotenv import load_dotenv
 from datetime import datetime
 import pytz
 
+logger = logging.getLogger(__name__)
+
 # Load environment variables
-load_dotenv()
+# Priority: 1. GCP Secret Manager, 2. .env file
+def load_environment():
+    """Load environment variables from Secret Manager or .env file"""
+    
+    # Check if running in GCP (Cloud Run, Cloud Functions, GCE, etc.)
+    is_cloud_environment = os.getenv('K_SERVICE') or os.getenv('FUNCTION_TARGET') or os.getenv('GAE_INSTANCE')
+    
+    if is_cloud_environment or os.getenv('USE_SECRET_MANAGER', '').lower() == 'true':
+        # Running in cloud or explicitly requested to use Secret Manager
+        logger.info("Attempting to load secrets from GCP Secret Manager...")
+        try:
+            from secrets_manager import load_secrets_from_gcp
+            
+            secret_id = os.getenv('SECRET_ID', 'linkedin-bot')
+            project_id = os.getenv('GCP_PROJECT')
+            
+            if load_secrets_from_gcp(secret_id, project_id):
+                logger.info("Successfully loaded secrets from GCP Secret Manager")
+                return
+            else:
+                logger.warning("Failed to load from Secret Manager, falling back to .env file")
+        except ImportError:
+            logger.warning("secrets_manager module not available, falling back to .env file")
+        except Exception as e:
+            logger.warning(f"Error loading from Secret Manager: {e}, falling back to .env file")
+    
+    # Fall back to .env file for local development
+    logger.info("Loading environment variables from .env file")
+    load_dotenv()
+
+load_environment()
 
 class Config:
     # LinkedIn API Configuration
