@@ -22,7 +22,8 @@ steps:
       - |
         echo "=== Connecting to GCE instance and deploying ==="
 
-        gcloud compute ssh himanshu@instance-20251025-043319 \
+        # Use OS Login without specifying username - let service account authenticate
+        gcloud compute ssh instance-20251025-043319 \
           --project=citric-celerity-416705 \
           --zone=us-central1-c \
           --strict-host-key-checking=no \
