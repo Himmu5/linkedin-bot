@@ -35,8 +35,7 @@ steps:
             git fetch origin && \
             git reset --hard origin/main && \
             echo \"=== Installing/Updating Python dependencies ===\" && \
-            python3 -m pip install -r requirements.txt --upgrade || \
-            (echo \"Pip install failed, trying with pip3...\" && pip3 install -r requirements.txt --upgrade) && \
+            python3 -m pip install -r requirements.txt --upgrade --break-system-packages && \
             echo \"=== Reloading systemd and starting linkedin-bot service ===\" && \
             systemctl daemon-reload && \
             systemctl start linkedin-bot && \
