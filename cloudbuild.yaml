@@ -40,5 +40,7 @@ steps:
             echo \"=== Deployment complete ===\"
           '"
 
-  options:
-    logging: CLOUD_LOGGING_ONLY
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: 1200s
