@@ -14,9 +14,19 @@ steps:
         export USE_SECRET_MANAGER=true && \
         export SECRET_ID=linkedin-bot && \
         source venv/bin/activate && \
+        echo '=== Installing dependencies ===' && \
         pip install -r requirements.txt && \
+        echo '=== Stopping old server ===' && \
         pkill -f 'python3 cli.py start' || true && \
-        nohup python3 cli.py start > server.log 2>&1 &"
+        sleep 2 && \
+        echo '=== Starting new server ===' && \
+        nohup python3 cli.py start > server.log 2>&1 & \
+        sleep 5 && \
+        echo '=== Server startup logs ===' && \
+        tail -n 50 server.log && \
+        echo '=== Checking if server is running ===' && \
+        ps aux | grep 'python3 cli.py start' | grep -v grep && \
+        echo '=== Server deployed successfully ==='"
 
 options:
   logging: CLOUD_LOGGING_ONLY
