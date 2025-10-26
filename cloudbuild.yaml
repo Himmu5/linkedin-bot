@@ -7,26 +7,29 @@ steps:
         gcloud compute ssh himanshu@instance-20251025-043319 \
         --project=citric-celerity-416705 \
         --zone=us-central1-c \
-        --command="cd /home/himanshu/linkedin-bot && \
+        --command="sudo -u himanshu bash -c '
+        cd /home/himanshu/linkedin-bot && \
+        git config --global --add safe.directory /home/himanshu/linkedin-bot && \
         git fetch origin && \
         git reset --hard origin/main && \
         export GCP_PROJECT=citric-celerity-416705 && \
         export USE_SECRET_MANAGER=true && \
         export SECRET_ID=linkedin-bot && \
         source venv/bin/activate && \
-        echo '=== Installing dependencies ===' && \
+        echo \"=== Installing dependencies ===\" && \
         pip install -r requirements.txt && \
-        echo '=== Stopping old server ===' && \
-        pkill -f 'python3 cli.py start' || true && \
+        echo \"=== Stopping old server ===\" && \
+        pkill -f \"python3 cli.py start\" || true && \
         sleep 2 && \
-        echo '=== Starting new server ===' && \
+        echo \"=== Starting new server ===\" && \
         nohup python3 cli.py start > server.log 2>&1 & \
         sleep 5 && \
-        echo '=== Server startup logs ===' && \
+        echo \"=== Server startup logs ===\" && \
         tail -n 50 server.log && \
-        echo '=== Checking if server is running ===' && \
-        ps aux | grep 'python3 cli.py start' | grep -v grep && \
-        echo '=== Server deployed successfully ==='"
+        echo \"=== Checking if server is running ===\" && \
+        ps aux | grep \"python3 cli.py start\" | grep -v grep && \
+        echo \"=== Server deployed successfully ===\"
+        '"
 
 options:
   logging: CLOUD_LOGGING_ONLY
