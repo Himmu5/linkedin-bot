@@ -40,5 +40,5 @@ steps:
             echo \"=== Deployment complete ===\"
           '"
 
-options:
-  logging: CLO
+  options:
+    logging: CLOUD_LOGGING_ONLY
