@@ -4,3 +4,4 @@ schedule==1.2.0
 google-generativeai==0.3.2
 pytz==2023.3
 google-cloud-secret-manager==2.16.4
+streamlit==1.28.0

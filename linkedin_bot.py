@@ -24,6 +24,7 @@ class LinkedInBot:
     def __init__(self):
         self.linkedin_api = LinkedInAPI()
         self.content_generator = ContentGenerator()
+        logger.info(f"LinkedInBot initialized with model: {self.content_generator.model_name}")
         self.is_running = False
         
         # Validate configuration
@@ -50,9 +51,9 @@ class LinkedInBot:
             logger.info("Starting post creation process...")
             
             # Generate content
-            logger.info(f"Generating content for topic: {topic or 'random'}")
+            logger.info(f"Generating content for topic: {topic or 'random'} using model: {self.content_generator.model_name}")
             content = self.content_generator.generate_post(topic)
-            logger.info(f"Generated content: {content[:100]}...")
+            logger.info(f"Generated content using model '{self.content_generator.model_name}': {content[:100]}...")
             
             # Post to LinkedIn
             logger.info("Posting to LinkedIn...")
