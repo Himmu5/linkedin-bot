@@ -71,3 +71,6 @@ credentials.json
 # Backup files
 *.bak
 *.backup
+
+# Scheduled posts data
+scheduled_posts.json
