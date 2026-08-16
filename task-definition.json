@@ -1,0 +1,55 @@
+{
+  "family": "linkedin-bot",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::911291530094:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "linkedin-bot",
+      "image": "911291530094.dkr.ecr.ap-south-1.amazonaws.com/linkedin-bot:latest",
+      "essential": true,
+      "command": ["python", "cli.py", "post"],
+      "secrets": [
+        {
+          "name": "LINKEDIN_CLIENT_ID",
+          "valueFrom": "arn:aws:secretsmanager:ap-south-1:911291530094:secret:linkedin-bot/env-srtyB5:LINKEDIN_CLIENT_ID::"
+        },
+        {
+          "name": "LINKEDIN_CLIENT_SECRET",
+          "valueFrom": "arn:aws:secretsmanager:ap-south-1:911291530094:secret:linkedin-bot/env-srtyB5:LINKEDIN_CLIENT_SECRET::"
+        },
+        {
+          "name": "LINKEDIN_ACCESS_TOKEN",
+          "valueFrom": "arn:aws:secretsmanager:ap-south-1:911291530094:secret:linkedin-bot/env-srtyB5:LINKEDIN_ACCESS_TOKEN::"
+        },
+        {
+          "name": "LINKEDIN_REDIRECT_URI",
+          "valueFrom": "arn:aws:secretsmanager:ap-south-1:911291530094:secret:linkedin-bot/env-srtyB5:LINKEDIN_REDIRECT_URI::"
+        },
+        {
+          "name": "GEMINI_API_KEY",
+          "valueFrom": "arn:aws:secretsmanager:ap-south-1:911291530094:secret:linkedin-bot/env-srtyB5:GEMINI_API_KEY::"
+        },
+        {
+          "name": "TIMEZONE",
+          "valueFrom": "arn:aws:secretsmanager:ap-south-1:911291530094:secret:linkedin-bot/env-srtyB5:TIMEZONE::"
+        },
+        {
+          "name": "POST_TIME",
+          "valueFrom": "arn:aws:secretsmanager:ap-south-1:911291530094:secret:linkedin-bot/env-srtyB5:POST_TIME::"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/linkedin-bot",
+          "awslogs-region": "ap-south-1",
+          "awslogs-stream-prefix": "ecs",
+          "awslogs-create-group": "true"
+        }
+      }
+    }
+  ]
+}

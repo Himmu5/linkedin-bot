@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 class ContentGenerator:
     """Generate engaging frontend technology content for LinkedIn posts using Gemini"""
     
-    def __init__(self, model_name: str = 'gemini-2.5-pro'):
+    def __init__(self, model_name: str = 'gemini-3.7-flash'):
         # Configure Gemini
         genai.configure(api_key=Config.GEMINI_API_KEY)
         self.model = genai.GenerativeModel(model_name)
